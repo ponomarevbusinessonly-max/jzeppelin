@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata = {
   title: {
-    default: 'J.Zeppelin — Drug Test Kits',
+    default: 'J.Zeppelin — Personal Tests',
     template: '%s | J.Zeppelin',
   },
   description:
