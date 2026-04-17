@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -33,6 +34,51 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [activeLang, setActiveLang] = useState("EN");
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Smooth-scroll to in-page section without putting #hash in the URL.
+  // If we're already on the page that owns the section, scroll directly.
+  // Otherwise navigate to the page first, then scroll once it mounts.
+  const handleAnchorClick = (e, href) => {
+    const hashIdx = href.indexOf('#');
+    if (hashIdx === -1) return; // not an anchor link, let Link handle it
+
+    const targetPath = href.slice(0, hashIdx) || '/';
+    const id = href.slice(hashIdx + 1);
+
+    if (pathname === targetPath) {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // strip the hash from the URL without reload
+        window.history.replaceState(null, '', targetPath);
+      }
+      setMenuOpen(false);
+    } else {
+      // navigate, then scroll after route change
+      e.preventDefault();
+      sessionStorage.setItem('scrollToId', id);
+      router.push(targetPath);
+      setMenuOpen(false);
+    }
+  };
+
+  // After landing on a new page, honor a pending scroll target
+  useEffect(() => {
+    const id = sessionStorage.getItem('scrollToId');
+    if (!id) return;
+    sessionStorage.removeItem('scrollToId');
+    // wait a tick for the DOM to render
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.replaceState(null, '', pathname);
+      }
+    });
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -76,6 +122,7 @@ export default function Navbar() {
               <div key={link.label} className="relative group">
                 <Link
                   href={link.href}
+                  onClick={(e) => handleAnchorClick(e, link.href)}
                   className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
                 >
                   {link.label}
@@ -107,6 +154,7 @@ export default function Navbar() {
               <motion.div key={link.label} whileHover={{ x: 2 }} transition={{ duration: 0.15 }}>
                 <Link
                   href={link.href}
+                  onClick={(e) => handleAnchorClick(e, link.href)}
                   className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
@@ -212,7 +260,13 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    if (link.href.includes('#')) {
+                      handleAnchorClick(e, link.href);
+                    } else {
+                      setMenuOpen(false);
+                    }
+                  }}
                   className="block py-3 font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
