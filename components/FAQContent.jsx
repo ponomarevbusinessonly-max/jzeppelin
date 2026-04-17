@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
   {
@@ -46,46 +47,102 @@ const faqs = [
   },
 ];
 
+const EASE = [0.22, 1, 0.36, 1];
+
+const gridStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+};
+
+const cardVar = {
+  hidden:  { opacity: 0, y: 40, filter: 'blur(6px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)',
+    transition: { duration: 0.65, ease: EASE } },
+};
+
 function FAQCard({ question, answer, even }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div
+    <motion.div
+      variants={cardVar}
+      whileHover={{ y: -4 }}
+      transition={{ type: 'tween', duration: 0.25, ease: EASE }}
       className="border-2 border-foreground p-6 flex flex-col"
       style={{ backgroundColor: even ? '#f5f5f5' : '#ffffff' }}
     >
       <h3 className="font-heading text-xl md:text-2xl tracking-tight uppercase leading-tight mb-4">
         {question}
       </h3>
-      <p className={`font-body text-sm text-foreground leading-relaxed flex-1 transition-all duration-200 ${open ? '' : 'line-clamp-3'}`}>
-        {answer}
-      </p>
-      <button
+
+      {/* Collapsed preview (shown only when closed) */}
+      {!open && (
+        <p className="font-body text-sm text-foreground leading-relaxed flex-1 line-clamp-3">
+          {answer}
+        </p>
+      )}
+
+      {/* Smooth expand */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.p
+            key="full"
+            className="font-body text-sm text-foreground leading-relaxed flex-1 overflow-hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+          >
+            {answer}
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      <motion.button
         onClick={() => setOpen(!open)}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
         className="mt-4 self-end w-7 h-7 border-2 border-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors flex-shrink-0"
         aria-label={open ? 'Collapse' : 'Expand'}
       >
-        {open ? <Minus size={14} strokeWidth={2.5} /> : <Plus size={14} strokeWidth={2.5} />}
-      </button>
-    </div>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: EASE }}
+          className="flex items-center justify-center"
+        >
+          {open ? <Minus size={14} strokeWidth={2.5} /> : <Plus size={14} strokeWidth={2.5} />}
+        </motion.span>
+      </motion.button>
+    </motion.div>
   );
 }
 
 export default function FAQContent() {
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        variants={gridStagger}
+        initial="hidden"
+        animate="visible"
+      >
         {faqs.map((faq, i) => (
           <FAQCard key={faq.question} question={faq.question} answer={faq.answer} even={i % 2 === 0} />
         ))}
-      </div>
+      </motion.div>
 
-      <p className="mt-14 font-body text-sm text-muted-foreground/60">
+      <motion.p
+        className="mt-14 font-body text-sm text-muted-foreground/60"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: EASE }}
+      >
         Still have questions?{' '}
         <a href="mailto:hello@jzeppelin.com" className="underline underline-offset-2 hover:text-foreground transition-colors">
           Contact us
         </a>
-      </p>
+      </motion.p>
     </>
   );
 }
