@@ -5,12 +5,12 @@ import HashScrollCleaner from '@/components/HashScrollCleaner';
 
 export const metadata = {
   title: {
-    default: 'J.Zeppelin — Personal Tests',
+    default: 'J.Zeppelin-Personal Tests',
     template: '%s | J.Zeppelin',
   },
   description:
     'Rapid drug detection tests for personal safety. Drink spike test, 9-panel oral fluid test, and THC active compound test. Available in Germany and across the EU.',
-  metadataBase: new URL('https://jzeppelin.com'),
+  metadataBase: new URL('https://jzeppelin.eu'),
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
