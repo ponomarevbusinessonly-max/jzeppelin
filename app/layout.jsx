@@ -3,6 +3,7 @@ import QueryProvider from '@/components/QueryProvider';
 import { Toaster } from '@/components/ui/toaster';
 import HashScrollCleaner from '@/components/HashScrollCleaner';
 import CookieConsent from '@/components/CookieConsent';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   title: {
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
           {children}
           <CookieConsent />
           <Toaster />
+          <Analytics />
         </QueryProvider>
       </body>
     </html>
