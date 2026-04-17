@@ -104,7 +104,22 @@ export default function Navbar() {
     >
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <Link
+          href="/"
+          onClick={(e) => {
+            // If we're already on the home page, just scroll to top and
+            // strip any leftover #hash from the URL (Next.js <Link> won't
+            // re-navigate when the pathname is unchanged, so the hash
+            // would otherwise stick).
+            if (pathname === '/') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.history.replaceState(null, '', '/');
+            }
+            setMenuOpen(false);
+          }}
+          className="flex items-center"
+        >
           <Image
             src="/Logo.svg"
             alt="J.Zeppelin"
