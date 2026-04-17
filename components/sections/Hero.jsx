@@ -53,7 +53,7 @@ export default function Hero() {
       {mounted && <>
       {/* ── Umbrella — bottom-right ── */}
       <motion.div
-        className="absolute right-[-18%] bottom-[-1%] pointer-events-none hidden md:block"
+        className="absolute right-[0%] bottom-[-1%] pointer-events-none hidden md:block"
         style={{ y: slowY }}
         initial={{ opacity: 0, x: 80, scale: 0.8 }}
         animate={{ opacity: 0.9, x: 0, scale: 1 }}
