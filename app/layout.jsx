@@ -2,6 +2,7 @@ import './globals.css';
 import QueryProvider from '@/components/QueryProvider';
 import { Toaster } from '@/components/ui/toaster';
 import HashScrollCleaner from '@/components/HashScrollCleaner';
+import CookieConsent from '@/components/CookieConsent';
 
 export const metadata = {
   title: {
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
         <QueryProvider>
           <HashScrollCleaner />
           {children}
+          <CookieConsent />
           <Toaster />
         </QueryProvider>
       </body>
