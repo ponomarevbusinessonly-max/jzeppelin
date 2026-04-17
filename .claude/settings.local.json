@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(netstat -ano)",
+      "Bash(tasklist /FI \"PID eq 10432\")",
+      "Bash(powershell -Command \"Get-Process -Id 10432 | Select-Object Id,ProcessName,MainWindowTitle,Path\")",
+      "Bash(powershell -Command \"Get-CimInstance Win32_Process -Filter 'ProcessId=10432' | Select-Object ProcessId, Name, CommandLine\")",
+      "Bash(powershell -Command \"Stop-Process -Id 10432 -Force\")"
+    ]
+  }
+}

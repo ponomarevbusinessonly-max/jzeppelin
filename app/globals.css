@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 0 0% 5%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 5%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 5%;
+    --radius: 0.5rem;
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+}
+
+@keyframes sketch-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  30%       { transform: translateY(-14px) rotate(1.5deg); }
+  70%       { transform: translateY(7px) rotate(-1deg); }
+}
+
+@keyframes sketch-float-alt {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  35%       { transform: translateY(12px) rotate(-2deg); }
+  65%       { transform: translateY(-6px) rotate(1deg); }
+}
+
+@keyframes float-rotate {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25%       { transform: translateY(-16px) rotate(4deg); }
+  75%       { transform: translateY(8px) rotate(-3deg); }
+}
+
+@keyframes drift-float {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  20%       { transform: translate(10px, -18px) rotate(3deg); }
+  50%       { transform: translate(-7px, 8px) rotate(-2deg); }
+  80%       { transform: translate(14px, -10px) rotate(4deg); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes peek-in {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(-4px); }
+}
+
+.sketch-float      { animation: sketch-float 10s ease-in-out infinite; }
+.sketch-float-alt  { animation: sketch-float-alt 10s ease-in-out infinite; }
+.sketch-float-slow { animation: sketch-float 15s ease-in-out infinite; }
+.float-rotate      { animation: float-rotate 11s ease-in-out infinite; }
+.drift-float       { animation: drift-float 18s ease-in-out infinite; }
+.spin-slow         { animation: spin-slow 28s linear infinite; }
+.peek-anim         { animation: peek-in 8s ease-in-out infinite; }
+
+html {
+  scroll-behavior: smooth;
+}
