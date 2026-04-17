@@ -1,17 +1,28 @@
 import React from 'react';
+import Link from 'next/link';
 
 const navLinks = [
   { label: "Products", href: "/#products" },
   { label: "Why J.Zeppelin", href: "/#why" },
   { label: "Where to Buy", href: "/#buy" },
   { label: "Incident Map", href: "/#map" },
+  { label: "FAQ", href: "/faq" },
+];
+
+const legalLinks = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Cookie Policy", href: "/cookies" },
+  { label: "Terms of Use", href: "/terms" },
+  { label: "Right of Withdrawal", href: "/withdrawal" },
+  { label: "Accessibility", href: "/accessibility" },
+  { label: "Imprint", href: "/imprint" },
 ];
 
 export default function Footer() {
   return (
     <footer className="bg-foreground text-background py-16 md:py-20">
       <div className="w-full px-6 md:px-16 lg:px-24">
-        <div className="flex flex-col md:flex-row justify-between gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr] gap-12">
           {/* Logo & Tagline */}
           <div className="max-w-sm">
             <h2 className="font-heading text-4xl tracking-tight">J.ZEPPELIN</h2>
@@ -20,17 +31,42 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Nav Links */}
-          <nav className="flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="font-body text-sm text-background/60 hover:text-background transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+          {/* Explore */}
+          <nav>
+            <p className="font-heading text-xs tracking-widest uppercase text-background/40 mb-4">
+              Explore
+            </p>
+            <ul className="flex flex-col gap-2.5">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="font-body text-sm text-background/60 hover:text-background transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Legal */}
+          <nav>
+            <p className="font-heading text-xs tracking-widest uppercase text-background/40 mb-4">
+              Legal
+            </p>
+            <ul className="flex flex-col gap-2.5">
+              {legalLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="font-body text-sm text-background/60 hover:text-background transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 

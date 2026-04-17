@@ -77,7 +77,14 @@ export default function CookieConsent() {
             <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
               We use essential cookies to make the site work and, with your
               consent, analytics cookies to understand how visitors use it.
-              Read our{' '}
+              See our{' '}
+              <Link
+                href="/cookies"
+                className="underline underline-offset-2 text-foreground hover:opacity-70 transition-opacity"
+              >
+                cookie policy
+              </Link>
+              {' '}and{' '}
               <Link
                 href="/privacy"
                 className="underline underline-offset-2 text-foreground hover:opacity-70 transition-opacity"
