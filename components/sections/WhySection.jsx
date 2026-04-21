@@ -2,14 +2,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-const features = [
-  { label: "Fast.",       text: "Results in 5 minutes." },
-  { label: "Foolproof.",  text: "No training required." },
-  { label: "Discreet.",   text: "Fits in your pocket. Looks like nothing." },
-];
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 export default function WhySection() {
+  const dict = useDict();
+  const features = dict.why.features;
   return (
     <section id="why" className="py-28 md:py-36 relative overflow-hidden">
 
@@ -44,27 +41,25 @@ export default function WhySection() {
             className="font-heading text-5xl md:text-7xl tracking-tight mb-8"
             variants={{ hidden: { opacity: 0, x: -40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } } }}
           >
-            WHY J.ZEPPELIN
+            {dict.why.heading}
           </motion.h2>
           <motion.p
             className="font-body text-lg md:text-xl text-foreground font-medium leading-snug mb-6"
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } }}
           >
-            We made it simple on purpose.
+            {dict.why.lead}
           </motion.p>
           <motion.p
             className="font-body text-base text-muted-foreground leading-relaxed mb-4"
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } }}
           >
-            Drug testing shouldn't require a lab, a prescription, or a chemistry degree.
-            J.Zeppelin tests are designed for real situations. A club, a house party, a stranger's drink.
-            You get a clear result in minutes, no expertise needed.
+            {dict.why.body1}
           </motion.p>
           <motion.p
             className="font-body text-base text-muted-foreground leading-relaxed"
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } }}
           >
-            We don't judge the night you're having. We just make sure you get home from it.
+            {dict.why.body2}
           </motion.p>
         </motion.div>
 
@@ -98,7 +93,7 @@ export default function WhySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          *Not for medical or forensic use. For personal safety only.
+          {dict.why.disclaimer}
         </motion.p>
 
       </div>

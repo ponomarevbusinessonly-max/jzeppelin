@@ -3,38 +3,39 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-const products = [
-  {
-    name: "DRINK CHECK TEST",
-    description: "6 beverage sticker tests. Detects GHB, Ketamine, Flunitrazepam in drinks.",
-    image: "/products/DrinkCheck.jpg",
-    floatImage: "/visualelements/Martini.png",
-    floatClass: "sketch-float",
-    href: "/products/drink-check-test",
-    invertImage: true,
-  },
-  {
-    name: "MULTI-DRUG TEST",
-    description: "9-panel oral fluid test. Detects OPI, MET, BZO, COC, AMP, MDMA, BUP, MTD, THC.",
-    image: "/products/MultiTest.jpg",
-    floatImage: "/visualelements/capsule.png",
-    floatClass: "sketch-float-alt",
-    href: "/products/multi-drug-test",
-    invertImage: false,
-  },
-  {
-    name: "THC PARENT TEST",
-    description: "Oral fluid test. Detects Δ9-THC parent compound (not the metabolite).",
-    image: "/products/THCParent.jpg",
-    floatImage: "/visualelements/weed.png",
-    floatClass: "sketch-float-slow",
-    href: "/products/thc-parent-test",
-    invertImage: false,
-  },
-];
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 export default function Products() {
+  const dict = useDict();
+  const products = [
+    {
+      name: dict.products.items.drink.name,
+      description: dict.products.items.drink.description,
+      image: "/products/DrinkCheck.jpg",
+      floatImage: "/visualelements/Martini.png",
+      floatClass: "sketch-float",
+      href: "/products/drink-check-test",
+      invertImage: true,
+    },
+    {
+      name: dict.products.items.multi.name,
+      description: dict.products.items.multi.description,
+      image: "/products/MultiTest.jpg",
+      floatImage: "/visualelements/capsule.png",
+      floatClass: "sketch-float-alt",
+      href: "/products/multi-drug-test",
+      invertImage: false,
+    },
+    {
+      name: dict.products.items.thc.name,
+      description: dict.products.items.thc.description,
+      image: "/products/THCParent.jpg",
+      floatImage: "/visualelements/weed.png",
+      floatClass: "sketch-float-slow",
+      href: "/products/thc-parent-test",
+      invertImage: false,
+    },
+  ];
   return (
     <section id="products" className="relative py-[90px] md:py-[115px] overflow-hidden">
 
@@ -62,7 +63,7 @@ export default function Products() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          Our Tests
+          {dict.products.heading}
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5">
@@ -109,10 +110,10 @@ export default function Products() {
               </p>
               <div className="flex gap-2 relative z-10">
                 <Link href={product.href} className="px-4 py-2 border border-foreground text-foreground font-body text-xs font-medium hover:bg-foreground hover:text-background transition-colors">
-                  How to use
+                  {dict.products.howToUse}
                 </Link>
                 <Link href={product.href} className="px-4 py-2 bg-foreground text-background font-body text-xs font-medium hover:bg-foreground/85 transition-colors">
-                  Details
+                  {dict.products.details}
                 </Link>
               </div>
             </motion.div>

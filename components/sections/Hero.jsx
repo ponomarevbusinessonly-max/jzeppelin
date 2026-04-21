@@ -2,12 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-
-// Word-split headline data
-const HEADLINE = [
-  ["Your", "Night,"],
-  ["Your", "Rules"],
-];
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 const headlineContainerVars = {
   hidden: {},
@@ -30,6 +25,8 @@ const itemVars = {
 };
 
 export default function Hero() {
+  const dict = useDict();
+  const HEADLINE = dict.hero.headline;
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -185,7 +182,7 @@ export default function Hero() {
                 variants={itemVars}
                 className="mt-6 text-lg md:text-xl text-muted-foreground font-body font-light max-w-lg leading-relaxed"
               >
-                Spiked drinks happen. Bad trips happen. J.Zeppelin makes sure you know before it's too late — with fast, discreet tests you can use anywhere.
+                {dict.hero.subtitle}
               </motion.p>
               <motion.div variants={itemVars}>
                 <motion.a
@@ -194,7 +191,7 @@ export default function Hero() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  See our tests
+                  {dict.hero.cta}
                 </motion.a>
               </motion.div>
             </motion.div>

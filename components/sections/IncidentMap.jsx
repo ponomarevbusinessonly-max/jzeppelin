@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReportPanel from '@/components/map/ReportPanel';
 import SubmitReportModal from '@/components/map/SubmitReportModal';
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 const ease = [0.22, 1, 0.36, 1];
 
@@ -21,6 +22,7 @@ const IncidentMapView = dynamic(
 );
 
 export default function IncidentMap() {
+  const dict = useDict();
   const [selectedReport, setSelectedReport] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [mapKey, setMapKey] = useState(0);
@@ -46,7 +48,7 @@ export default function IncidentMap() {
             transition={{ duration: 0.7, ease }}
           >
             <h2 className="font-heading text-5xl md:text-7xl tracking-tight leading-[0.95]">
-              Incident Map
+              {dict.map.heading}
             </h2>
             <motion.p
               className="font-body text-muted-foreground text-lg font-light mt-4 max-w-lg leading-relaxed"
@@ -55,7 +57,7 @@ export default function IncidentMap() {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.7, ease, delay: 0.12 }}
             >
-              User-submitted reports of substance detection across Europe. Click a pin to see details.
+              {dict.map.subheading}
             </motion.p>
           </motion.div>
 
@@ -69,7 +71,7 @@ export default function IncidentMap() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.96 }}
           >
-            + Report an incident
+            {dict.map.report}
           </motion.button>
         </div>
 
@@ -83,7 +85,7 @@ export default function IncidentMap() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.4, ease }}
             >
-              Report submitted. Thank you for keeping the community informed.
+              {dict.map.submitted}
             </motion.div>
           )}
         </AnimatePresence>
@@ -107,7 +109,7 @@ export default function IncidentMap() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          All reports are anonymous by default. Data is community-submitted and unverified.
+          {dict.map.note}
         </motion.p>
       </div>
 

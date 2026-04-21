@@ -6,34 +6,51 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDict, useLocale } from '@/lib/i18n/LocaleProvider';
 
-const PRODUCTS = [
-  { label: "Drink Check Test", href: "/products/drink-check-test" },
-  { label: "Multi-Drug Test",  href: "/products/multi-drug-test" },
-  { label: "THC Parent Test",  href: "/products/thc-parent-test" },
+// Per-locale product labels (Navbar doesn't need full dict for products dropdown)
+const PRODUCT_HREFS = [
+  "/products/drink-check-test",
+  "/products/multi-drug-test",
+  "/products/thc-parent-test",
 ];
 
-const links = [
-  { label: "Products", href: "/#products", dropdown: PRODUCTS },
-  { label: "Why", href: "/#why" },
-  { label: "Buy", href: "/#buy" },
-  { label: "Map", href: "/#map" },
-  { label: "AI Analysis ✦", href: "/ai-analysis" },
-  { label: "FAQ", href: "/faq" },
-];
+// Map locale → home root so language switching lands on the right page
+const LOCALE_HOME = { EN: '/', UK: '/uk', DE: '/', FR: '/' };
 
 const languages = [
-  { code: "EN", label: "English" },
-  { code: "DE", label: "Deutsch" },
-  { code: "FR", label: "Français" },
-  { code: "RU", label: "Русский" },
+  { code: "EN", label: "English",    route: "/" },
+  { code: "UK", label: "Українська", route: "/uk" },
+  { code: "DE", label: "Deutsch",    route: "/" },
+  { code: "FR", label: "Français",   route: "/" },
 ];
 
 export default function Navbar() {
+  const dict = useDict();
+  const locale = useLocale();
+
+  // Build nav links from dictionary
+  const PRODUCTS = [
+    { label: dict.nav.productsItems.drinkCheck, href: PRODUCT_HREFS[0] },
+    { label: dict.nav.productsItems.multiDrug,  href: PRODUCT_HREFS[1] },
+    { label: dict.nav.productsItems.thcParent,  href: PRODUCT_HREFS[2] },
+  ];
+  // Home prefix for anchor links (EN = '/', UK = '/uk')
+  const homeBase = locale === 'uk' ? '/uk' : '';
+  const links = [
+    { label: dict.nav.products,   href: `${homeBase}/#products`, dropdown: PRODUCTS },
+    { label: dict.nav.why,        href: `${homeBase}/#why` },
+    { label: dict.nav.buy,        href: `${homeBase}/#buy` },
+    { label: dict.nav.map,        href: `${homeBase}/#map` },
+    { label: dict.nav.aiAnalysis, href: "/ai-analysis" },
+    { label: dict.nav.faq,        href: "/faq" },
+  ];
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [activeLang, setActiveLang] = useState("EN");
+  // Derive active lang from locale context (uppercase)
+  const activeLang = locale === 'uk' ? 'UK' : 'EN';
   const router = useRouter();
   const pathname = usePathname();
 
@@ -44,7 +61,9 @@ export default function Navbar() {
     const hashIdx = href.indexOf('#');
     if (hashIdx === -1) return; // not an anchor link, let Link handle it
 
-    const targetPath = href.slice(0, hashIdx) || '/';
+    // Normalize: "/uk/" → "/uk", "" → "/"
+    const rawPath = href.slice(0, hashIdx);
+    const targetPath = (rawPath.replace(/\/$/, '') || '/');
     const id = href.slice(hashIdx + 1);
 
     if (pathname === targetPath) {
@@ -105,16 +124,13 @@ export default function Navbar() {
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link
-          href="/"
+          href={locale === 'uk' ? '/uk' : '/'}
           onClick={(e) => {
-            // If we're already on the home page, just scroll to top and
-            // strip any leftover #hash from the URL (Next.js <Link> won't
-            // re-navigate when the pathname is unchanged, so the hash
-            // would otherwise stick).
-            if (pathname === '/') {
+            // On both home variants (/ and /uk): scroll to top + strip hash
+            if (pathname === '/' || pathname === '/uk') {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
-              window.history.replaceState(null, '', '/');
+              window.history.replaceState(null, '', pathname);
             }
             setMenuOpen(false);
           }}
@@ -201,7 +217,7 @@ export default function Navbar() {
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { setActiveLang(lang.code); setLangOpen(false); }}
+                      onClick={() => { router.push(lang.route); setLangOpen(false); }}
                       className={`w-full text-left px-4 py-2 font-body text-sm transition-colors hover:bg-secondary ${
                         activeLang === lang.code ? 'text-foreground font-medium' : 'text-muted-foreground'
                       }`}
@@ -237,7 +253,7 @@ export default function Navbar() {
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { setActiveLang(lang.code); setLangOpen(false); }}
+                      onClick={() => { router.push(lang.route); setLangOpen(false); }}
                       className={`w-full text-left px-4 py-2 font-body text-sm transition-colors hover:bg-secondary ${
                         activeLang === lang.code ? 'text-foreground font-medium' : 'text-muted-foreground'
                       }`}

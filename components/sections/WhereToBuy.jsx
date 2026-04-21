@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 const ease = [0.22, 1, 0.36, 1];
 
 export default function WhereToBuy() {
+  const dict = useDict();
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -28,7 +30,7 @@ export default function WhereToBuy() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease }}
         >
-          Where to Buy
+          {dict.buy.heading}
         </motion.h2>
 
         <motion.p
@@ -38,7 +40,7 @@ export default function WhereToBuy() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease, delay: 0.1 }}
         >
-          Coming soon in Germany and across the EU.
+          {dict.buy.subheading}
         </motion.p>
 
         <AnimatePresence mode="wait">
@@ -51,7 +53,7 @@ export default function WhereToBuy() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease }}
             >
-              Thank you. We&apos;ll let you know.
+              {dict.buy.thanks}
             </motion.p>
           ) : (
             <motion.form
@@ -67,7 +69,7 @@ export default function WhereToBuy() {
               <input
                 type="email"
                 required
-                placeholder="your@email.com"
+                placeholder={dict.buy.emailPlaceholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 px-5 py-3.5 border border-border bg-transparent font-body text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
@@ -78,7 +80,7 @@ export default function WhereToBuy() {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
               >
-                Notify me
+                {dict.buy.submit}
               </motion.button>
             </motion.form>
           )}
