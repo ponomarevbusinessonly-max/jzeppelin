@@ -1,6 +1,6 @@
 import Navbar from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
-import LegalPlaceholder from '@/components/LegalPlaceholder';
+import LegalPage from '@/components/LegalPage';
 
 export const metadata = {
   title: 'Terms of Use',
@@ -13,10 +13,7 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      <LegalPlaceholder
-        title="Terms of Use"
-        subtitle="The rules and conditions that apply when you use the J.Zeppelin website, contact form or email updates."
-      />
+      <LegalPage file="terms.md" />
       <Footer />
     </div>
   );
