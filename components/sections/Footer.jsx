@@ -64,6 +64,20 @@ export default function Footer() {
           <p className="font-body text-xs text-background/40 leading-relaxed">
             {f.importer}
           </p>
+          {f.distributorLines && (
+            <div className="mt-4">
+              {f.distributorHeading && (
+                <p className="font-heading text-xs tracking-widest uppercase text-background/50 mb-2">
+                  {f.distributorHeading}
+                </p>
+              )}
+              {f.distributorLines.map((line, i) => (
+                <p key={i} className="font-body text-xs text-background/40 leading-relaxed">
+                  {line}
+                </p>
+              ))}
+            </div>
+          )}
           <p className="font-body text-xs text-background/30 mt-2">
             {f.disclaimer}
           </p>
