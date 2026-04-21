@@ -296,7 +296,7 @@ export default function ThcParentContent() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         <p className="font-body text-muted-foreground text-sm">{d.ctaText}</p>
-        <motion.a href="/#buy" className="px-8 py-4 bg-foreground text-background font-heading text-xl tracking-wide hover:bg-foreground/90 transition-colors"
+        <motion.a href={locale === 'uk' ? '/uk/#buy' : '/#buy'} className="px-8 py-4 bg-foreground text-background font-heading text-xl tracking-wide hover:bg-foreground/90 transition-colors"
           whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
           {d.ctaBtn}
         </motion.a>

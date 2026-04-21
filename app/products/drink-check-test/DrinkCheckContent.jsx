@@ -362,7 +362,7 @@ export default function DrinkCheckContent() {
         >
           <p className="font-body text-muted-foreground text-sm">{d.ctaText}</p>
           <motion.a
-            href="/#buy"
+            href={locale === 'uk' ? '/uk/#buy' : '/#buy'}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="px-8 py-4 bg-foreground text-background font-heading text-xl tracking-wide hover:bg-foreground/90 transition-colors"

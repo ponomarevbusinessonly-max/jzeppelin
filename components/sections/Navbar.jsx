@@ -29,14 +29,14 @@ export default function Navbar() {
   const dict = useDict();
   const locale = useLocale();
 
-  // Build nav links from dictionary
-  const PRODUCTS = [
-    { label: dict.nav.productsItems.drinkCheck, href: PRODUCT_HREFS[0] },
-    { label: dict.nav.productsItems.multiDrug,  href: PRODUCT_HREFS[1] },
-    { label: dict.nav.productsItems.thcParent,  href: PRODUCT_HREFS[2] },
-  ];
   // Home prefix for anchor links (EN = '/', UK = '/uk')
   const homeBase = locale === 'uk' ? '/uk' : '';
+  // Build nav links from dictionary — prefix product hrefs with current locale
+  const PRODUCTS = [
+    { label: dict.nav.productsItems.drinkCheck, href: `${homeBase}${PRODUCT_HREFS[0]}` },
+    { label: dict.nav.productsItems.multiDrug,  href: `${homeBase}${PRODUCT_HREFS[1]}` },
+    { label: dict.nav.productsItems.thcParent,  href: `${homeBase}${PRODUCT_HREFS[2]}` },
+  ];
   const links = [
     { label: dict.nav.products,   href: `${homeBase}/#products`, dropdown: PRODUCTS },
     { label: dict.nav.why,        href: `${homeBase}/#why` },

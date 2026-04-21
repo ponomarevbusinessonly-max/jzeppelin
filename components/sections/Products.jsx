@@ -3,10 +3,12 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useDict } from '@/lib/i18n/LocaleProvider';
+import { useDict, useLocale } from '@/lib/i18n/LocaleProvider';
 
 export default function Products() {
   const dict = useDict();
+  const locale = useLocale();
+  const prefix = locale === 'uk' ? '/uk' : '';
   const products = [
     {
       name: dict.products.items.drink.name,
@@ -14,7 +16,7 @@ export default function Products() {
       image: "/products/DrinkCheck.jpg",
       floatImage: "/visualelements/Martini.png",
       floatClass: "sketch-float",
-      href: "/products/drink-check-test",
+      href: `${prefix}/products/drink-check-test`,
       invertImage: true,
     },
     {
@@ -23,7 +25,7 @@ export default function Products() {
       image: "/products/MultiTest.jpg",
       floatImage: "/visualelements/capsule.png",
       floatClass: "sketch-float-alt",
-      href: "/products/multi-drug-test",
+      href: `${prefix}/products/multi-drug-test`,
       invertImage: false,
     },
     {
@@ -32,7 +34,7 @@ export default function Products() {
       image: "/products/THCParent.jpg",
       floatImage: "/visualelements/weed.png",
       floatClass: "sketch-float-slow",
-      href: "/products/thc-parent-test",
+      href: `${prefix}/products/thc-parent-test`,
       invertImage: false,
     },
   ];
