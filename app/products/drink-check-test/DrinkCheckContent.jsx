@@ -5,11 +5,10 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
 import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 const ease = [0.22, 1, 0.36, 1];
 
-// Word-split headline ("DRINK CHECK TEST" — single line)
-const HEADLINE_WORDS = ["DRINK", "CHECK", "TEST"];
 const headlineContainer = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.14, delayChildren: 0.15 } },
@@ -19,7 +18,6 @@ const wordVar = {
   visible: { y: "0%", transition: { duration: 0.85, ease } },
 };
 
-// Generic stagger
 const staggerContainer = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
@@ -30,42 +28,16 @@ const fadeUp = {
     transition: { duration: 0.8, ease } },
 };
 
-const steps = [
-  { num: "01", title: "Stick it",       text: "Remove the release paper and stick the sticker onto the back of your mobile phone or another flat surface." },
-  { num: "02", title: "Apply a drop",   text: "Apply a single drop of your drink to the test area — it should cover all 3 test spots." },
-  { num: "03", title: "Wait 1–3 min",   text: "Wait until the test spots are completely dry. This takes 1 to 3 minutes." },
-  { num: "04", title: "Read the result",text: "GHB or KET spot turns blue → positive. FLZ spot turns red-purple → positive. DO NOT DRINK if any spot changes color." },
-];
-
-const substances = [
-  { name: "GHB", full: "Gamma-hydroxybutyric acid", result: "Spot turns BLUE",       note: "Colorless, odorless. One of the most common drink-spiking agents." },
-  { name: "KET", full: "Ketamine HCl",              result: "Spot turns BLUE",       note: "Dissociative anesthetic. Used in powder or liquid form." },
-  { name: "FLZ", full: "Flunitrazepam / Rohypnol",  result: "Spot turns RED-PURPLE", note: "Powerful benzodiazepine. Causes memory loss and sedation." },
-];
-
-const facts = [
-  "Single-use sticker — discreet and pocket-sized",
-  "Results in 1–3 minutes",
-  "Works in cocktails, beer, wine, and non-alcoholic drinks",
-  "6 tests per pack",
-  "No lab equipment needed",
-  "Anonymous use — no app or account required",
-];
-
-const limitations = [
-  "Not suitable for milk products, creamy or oily beverages.",
-  "Blue or red-purple colored drinks may produce a false positive result.",
-  "Discard any suspect beverage immediately — do not taste it.",
-  "For personal use and reference only. A positive result should never be used as the sole basis for determining the presence of illegal drugs.",
-  "This is a personal safety aid, not a certified diagnostic device. If you feel unwell — seek help immediately regardless of the test result.",
-];
+// Headline words are always English (brand name — not translated)
+const HEADLINE_WORDS = ["DRINK", "CHECK", "TEST"];
 
 export default function DrinkCheckContent() {
+  const d = useDict().drinkCheck;
+
   return (
     <main className="flex-1 w-full px-6 md:px-16 lg:px-24 pt-32 pb-20 relative overflow-hidden">
 
       {/* ─── Decorative floating elements (Hero area) ─── */}
-      {/* Martini — right side of hero */}
       <motion.div
         className="absolute top-[18%] right-[-2%] pointer-events-none hidden md:block z-0"
         initial={{ opacity: 0, scale: 0.7, rotate: 15 }}
@@ -163,7 +135,7 @@ export default function DrinkCheckContent() {
         </div>
       </motion.div>
 
-      {/* ─── Page content (z-10 above decoratives) ─── */}
+      {/* ─── Page content ─── */}
       <div className="relative z-10">
 
         {/* Back */}
@@ -174,7 +146,7 @@ export default function DrinkCheckContent() {
         >
           <Link href="/" className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-12">
             <ArrowLeft size={14} />
-            Back to home
+            {d.backHome}
           </Link>
         </motion.div>
 
@@ -187,10 +159,9 @@ export default function DrinkCheckContent() {
               transition={{ duration: 0.6, ease, delay: 0.1 }}
               className="inline-block border border-border px-3 py-1 font-body text-xs text-muted-foreground tracking-widest uppercase mb-6 bg-background/70 backdrop-blur-sm"
             >
-              6 sticker tests per pack
+              {d.badge}
             </motion.div>
 
-            {/* Word-split single-line headline */}
             <motion.h1
               variants={headlineContainer}
               initial="hidden"
@@ -212,7 +183,7 @@ export default function DrinkCheckContent() {
               transition={{ duration: 0.85, ease, delay: 0.85 }}
               className="font-body text-lg text-muted-foreground font-light max-w-md leading-relaxed"
             >
-              A discreet beverage sticker test that detects the three most common spiking substances in 1–3 minutes — without altering your drink.
+              {d.subtitle}
             </motion.p>
           </div>
 
@@ -242,7 +213,7 @@ export default function DrinkCheckContent() {
             transition={{ duration: 0.7, ease }}
             className="font-heading text-4xl md:text-5xl tracking-tight mb-10"
           >
-            What it detects
+            {d.whatItDetects}
           </motion.h2>
           <motion.div
             variants={staggerContainer}
@@ -251,7 +222,7 @@ export default function DrinkCheckContent() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-1 sm:grid-cols-3 gap-4"
           >
-            {substances.map((s) => (
+            {d.substances.map((s) => (
               <motion.div
                 key={s.name}
                 variants={fadeUp}
@@ -277,7 +248,7 @@ export default function DrinkCheckContent() {
             transition={{ duration: 0.7, ease }}
             className="font-heading text-4xl md:text-5xl tracking-tight mb-10"
           >
-            How to use
+            {d.howToUse}
           </motion.h2>
           <motion.div
             variants={staggerContainer}
@@ -286,7 +257,7 @@ export default function DrinkCheckContent() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            {steps.map((step) => (
+            {d.steps.map((step) => (
               <motion.div
                 key={step.num}
                 variants={fadeUp}
@@ -310,7 +281,7 @@ export default function DrinkCheckContent() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.75, ease }}
           >
-            <h2 className="font-heading text-4xl md:text-5xl tracking-tight mb-8">Key facts</h2>
+            <h2 className="font-heading text-4xl md:text-5xl tracking-tight mb-8">{d.keyFacts}</h2>
             <motion.ul
               variants={staggerContainer}
               initial="hidden"
@@ -318,7 +289,7 @@ export default function DrinkCheckContent() {
               viewport={{ once: true, margin: '-60px' }}
               className="space-y-4"
             >
-              {facts.map((fact) => (
+              {d.facts.map((fact) => (
                 <motion.li
                   key={fact}
                   variants={fadeUp}
@@ -340,10 +311,10 @@ export default function DrinkCheckContent() {
           >
             <div className="flex items-start gap-3 mb-4">
               <AlertTriangle size={18} className="flex-shrink-0 mt-0.5" />
-              <h3 className="font-heading text-2xl tracking-tight">Limitations</h3>
+              <h3 className="font-heading text-2xl tracking-tight">{d.limitations}</h3>
             </div>
             <ul className="space-y-3 font-body text-sm text-muted-foreground leading-relaxed">
-              {limitations.map((l, i) => (
+              {d.limitationsList.map((l, i) => (
                 <li key={i}>{l}</li>
               ))}
             </ul>
@@ -359,7 +330,7 @@ export default function DrinkCheckContent() {
             transition={{ duration: 0.7, ease }}
             className="font-heading text-4xl md:text-5xl tracking-tight mb-10"
           >
-            Videos
+            {d.videos}
           </motion.h2>
           <motion.div
             variants={staggerContainer}
@@ -369,11 +340,11 @@ export default function DrinkCheckContent() {
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             <motion.div variants={fadeUp}>
-              <p className="font-body text-xs text-muted-foreground tracking-widest uppercase mb-3">How to use</p>
+              <p className="font-body text-xs text-muted-foreground tracking-widest uppercase mb-3">{d.videoHowToUse}</p>
               <YoutubeEmbed videoId="" title="Drink Check Test — How to use" />
             </motion.div>
             <motion.div variants={fadeUp}>
-              <p className="font-body text-xs text-muted-foreground tracking-widest uppercase mb-3">About the product</p>
+              <p className="font-body text-xs text-muted-foreground tracking-widest uppercase mb-3">{d.videoAbout}</p>
               <YoutubeEmbed videoId="" title="Drink Check Test — About the product" />
             </motion.div>
           </motion.div>
@@ -387,14 +358,14 @@ export default function DrinkCheckContent() {
           transition={{ duration: 0.7, ease }}
           className="border-t border-border pt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
         >
-          <p className="font-body text-muted-foreground text-sm">Available soon in Germany and across the EU.</p>
+          <p className="font-body text-muted-foreground text-sm">{d.ctaText}</p>
           <motion.a
             href="/#buy"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="px-8 py-4 bg-foreground text-background font-heading text-xl tracking-wide hover:bg-foreground/90 transition-colors"
           >
-            Where to buy →
+            {d.ctaBtn}
           </motion.a>
         </motion.div>
 
