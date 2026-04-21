@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie, X } from 'lucide-react';
 
-const STORAGE_KEY = 'jz-cookie-consent';
+const STORAGE_KEY = 'jzeppelin-cookie-consent';
 const EASE = [0.22, 1, 0.36, 1];
 
 export default function CookieConsent() {
@@ -34,6 +34,9 @@ export default function CookieConsent() {
         STORAGE_KEY,
         JSON.stringify({ choice, ts: Date.now() })
       );
+      // Notify ConditionalAnalytics (and any other listeners) synchronously
+      // so analytics loads immediately on Accept without a page reload.
+      window.dispatchEvent(new Event('cookieConsentChange'));
     } catch {}
     setVisible(false);
   };
