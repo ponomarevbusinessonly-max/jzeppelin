@@ -55,7 +55,8 @@ export default function Navbar() {
   const pathname = usePathname();
 
   // Smart language switch: preserve current page path across locales.
-  // UK pages live under /uk/…, EN pages live at the same path without /uk prefix.
+  // Uses hard navigation (window.location) so the LocaleProvider tree
+  // is fully remounted — soft router.push keeps the old provider alive.
   const handleLangSwitch = (lang) => {
     const isUkPath = pathname.startsWith('/uk');
     let target;
@@ -65,8 +66,8 @@ export default function Navbar() {
       // EN (and unsupported locales) — strip /uk prefix, fall back to home
       target = isUkPath ? (pathname.replace(/^\/uk/, '') || '/') : pathname;
     }
-    router.push(target);
     setLangOpen(false);
+    window.location.href = target;
   };
 
   // Smooth-scroll to in-page section without putting #hash in the URL.
