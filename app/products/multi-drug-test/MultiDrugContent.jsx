@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
 import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
-import { useDict } from '@/lib/i18n/LocaleProvider';
+import { useDict, useLocale } from '@/lib/i18n/LocaleProvider';
 
 const ease = [0.22, 1, 0.36, 1];
 
@@ -44,6 +44,8 @@ const panels = [
 
 export default function MultiDrugContent() {
   const d = useDict().multiDrug;
+  const locale = useLocale();
+  const homeHref = locale === 'uk' ? '/uk' : '/';
 
   return (
     <main className="flex-1 w-full px-6 md:px-16 lg:px-24 pt-32 pb-20 relative overflow-hidden">
@@ -194,7 +196,7 @@ export default function MultiDrugContent() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease }}
         >
-          <Link href="/" className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-12">
+          <Link href={homeHref} className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-12">
             <ArrowLeft size={14} />
             {d.backHome}
           </Link>

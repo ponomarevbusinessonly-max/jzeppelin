@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
 import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
-import { useDict } from '@/lib/i18n/LocaleProvider';
+import { useDict, useLocale } from '@/lib/i18n/LocaleProvider';
 
 const HEADLINE_WORDS = ["THC", "PARENT", "TEST"];
 
@@ -31,6 +31,8 @@ const stagger = {
 
 export default function ThcParentContent() {
   const d = useDict().thcParent;
+  const locale = useLocale();
+  const homeHref = locale === 'uk' ? '/uk' : '/';
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -93,7 +95,7 @@ export default function ThcParentContent() {
         </>}
 
         {/* Back */}
-        <Link href="/" className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 relative z-10">
+        <Link href={homeHref} className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 relative z-10">
           <ArrowLeft size={14} />
           {d.backHome}
         </Link>

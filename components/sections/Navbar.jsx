@@ -54,6 +54,21 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
 
+  // Smart language switch: preserve current page path across locales.
+  // UK pages live under /uk/…, EN pages live at the same path without /uk prefix.
+  const handleLangSwitch = (lang) => {
+    const isUkPath = pathname.startsWith('/uk');
+    let target;
+    if (lang.code === 'UK') {
+      target = isUkPath ? pathname : `/uk${pathname}`;
+    } else {
+      // EN (and unsupported locales) — strip /uk prefix, fall back to home
+      target = isUkPath ? (pathname.replace(/^\/uk/, '') || '/') : pathname;
+    }
+    router.push(target);
+    setLangOpen(false);
+  };
+
   // Smooth-scroll to in-page section without putting #hash in the URL.
   // If we're already on the page that owns the section, scroll directly.
   // Otherwise navigate to the page first, then scroll once it mounts.
@@ -217,7 +232,7 @@ export default function Navbar() {
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { router.push(lang.route); setLangOpen(false); }}
+                      onClick={() => handleLangSwitch(lang)}
                       className={`w-full text-left px-4 py-2 font-body text-sm transition-colors hover:bg-secondary ${
                         activeLang === lang.code ? 'text-foreground font-medium' : 'text-muted-foreground'
                       }`}
@@ -253,7 +268,7 @@ export default function Navbar() {
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { router.push(lang.route); setLangOpen(false); }}
+                      onClick={() => handleLangSwitch(lang)}
                       className={`w-full text-left px-4 py-2 font-body text-sm transition-colors hover:bg-secondary ${
                         activeLang === lang.code ? 'text-foreground font-medium' : 'text-muted-foreground'
                       }`}
