@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Oswald:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -28,6 +28,18 @@
     --radius: 0.5rem;
     --font-heading: 'Bebas Neue', 'Oswald', sans-serif;
     --font-body: 'Inter', sans-serif;
+  }
+
+  /* Ukrainian locale: avoid mixing Bebas Neue (Latin) with Oswald (Cyrillic
+     fallback) within the same heading — the proportions clash. Use Oswald
+     for the entire UK subtree so Cyrillic + Latin (e.g. "ЧОМУ J.ZEPPELIN",
+     "ТЕСТ НА АКТИВНИЙ THC") render in a single consistent typeface. */
+  [data-locale="uk"] {
+    --font-heading: 'Oswald', sans-serif;
+  }
+  [data-locale="uk"] .font-heading {
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 }
 
