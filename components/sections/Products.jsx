@@ -72,7 +72,7 @@ export default function Products() {
           {products.map((product, index) => (
             <motion.div
               key={product.name}
-              className="relative border border-border p-6 md:p-8 group hover:border-foreground/40 transition-colors overflow-hidden cursor-default"
+              className="relative border border-border p-6 md:p-8 group hover:border-foreground/40 transition-colors overflow-hidden cursor-default flex flex-col"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
@@ -107,10 +107,10 @@ export default function Products() {
               <h3 className="font-heading text-2xl md:text-3xl tracking-tight mb-3 relative z-10">
                 {product.name}
               </h3>
-              <p className="font-body text-xs text-muted-foreground leading-relaxed mb-6 relative z-10">
+              <p className="font-body text-xs text-muted-foreground leading-relaxed mb-6 relative z-10 flex-1">
                 {product.description}
               </p>
-              <div className="flex gap-2 relative z-10">
+              <div className="flex gap-2 relative z-10 mt-auto">
                 <Link href={product.href} className="px-4 py-2 bg-foreground text-background font-body text-xs font-medium hover:bg-foreground/85 transition-colors">
                   {dict.products.details}
                 </Link>
