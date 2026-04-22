@@ -111,9 +111,6 @@ export default function Products() {
                 {product.description}
               </p>
               <div className="flex gap-2 relative z-10">
-                <Link href={product.href} className="px-4 py-2 border border-foreground text-foreground font-body text-xs font-medium hover:bg-foreground hover:text-background transition-colors">
-                  {dict.products.howToUse}
-                </Link>
                 <Link href={product.href} className="px-4 py-2 bg-foreground text-background font-body text-xs font-medium hover:bg-foreground/85 transition-colors">
                   {dict.products.details}
                 </Link>
