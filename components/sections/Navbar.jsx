@@ -42,8 +42,8 @@ export default function Navbar() {
     { label: dict.nav.why,        href: `${homeBase}/#why` },
     { label: dict.nav.buy,        href: `${homeBase}/#buy` },
     { label: dict.nav.map,        href: `${homeBase}/#map` },
-    { label: dict.nav.aiAnalysis, href: "/ai-analysis" },
-    { label: dict.nav.faq,        href: "/faq" },
+    { label: dict.nav.aiAnalysis, href: `${homeBase}/ai-analysis` },
+    { label: dict.nav.faq,        href: `${homeBase}/faq` },
   ];
 
   const [scrolled, setScrolled] = useState(false);

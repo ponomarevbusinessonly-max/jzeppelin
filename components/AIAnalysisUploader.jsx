@@ -2,8 +2,11 @@
 
 import React, { useState } from 'react';
 import { Upload, Lock } from 'lucide-react';
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 export default function AIAnalysisUploader() {
+  const dict = useDict();
+  const u = dict.aiAnalysis.uploader;
   const [dragOver, setDragOver] = useState(false);
 
   return (
@@ -19,15 +22,15 @@ export default function AIAnalysisUploader() {
       <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] flex items-center justify-center z-10">
         <div className="flex flex-col items-center gap-2">
           <Lock size={22} className="text-muted-foreground" />
-          <span className="font-body text-xs text-muted-foreground">Not available yet</span>
+          <span className="font-body text-xs text-muted-foreground">{u.lockedLabel}</span>
         </div>
       </div>
 
       <Upload size={32} className="text-muted-foreground/30" />
       <p className="font-body text-sm text-muted-foreground/40">
-        Drop your test photo here or click to upload
+        {u.drop}
       </p>
-      <span className="font-body text-xs text-muted-foreground/30">JPG, PNG up to 10MB</span>
+      <span className="font-body text-xs text-muted-foreground/30">{u.types}</span>
     </div>
   );
 }

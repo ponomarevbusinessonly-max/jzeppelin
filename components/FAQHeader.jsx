@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useDict } from '@/lib/i18n/LocaleProvider';
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -18,6 +19,7 @@ const letterVar = {
 };
 
 export default function FAQHeader() {
+  const dict = useDict();
   return (
     <>
       <motion.h1
@@ -41,7 +43,7 @@ export default function FAQHeader() {
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.85, delay: 0.5, ease: EASE }}
       >
-        Everything you need to know about J.Zeppelin tests and how to use them.
+        {dict.faq.subtitle}
       </motion.p>
     </>
   );
