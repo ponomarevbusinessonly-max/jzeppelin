@@ -6,7 +6,11 @@
       "Bash(tasklist /FI \"PID eq 10432\")",
       "Bash(powershell -Command \"Get-Process -Id 10432 | Select-Object Id,ProcessName,MainWindowTitle,Path\")",
       "Bash(powershell -Command \"Get-CimInstance Win32_Process -Filter 'ProcessId=10432' | Select-Object ProcessId, Name, CommandLine\")",
-      "Bash(powershell -Command \"Stop-Process -Id 10432 -Force\")"
+      "Bash(powershell -Command \"Stop-Process -Id 10432 -Force\")",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat\\(hero\\): fanned product card stack replaces empty right side *)",
+      "Bash(git push *)",
+      "Bash(vercel --prod --yes)"
     ]
   }
 }
