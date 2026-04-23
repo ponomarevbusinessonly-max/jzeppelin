@@ -53,20 +53,20 @@ export default function Hero() {
 
       {mounted && <>
 
-      {/* ── Umbrella — repositioned to bottom-left ── */}
+      {/* ── Martini — bottom-right ── */}
       <motion.div
-        className="absolute left-[-4%] bottom-[-2%] pointer-events-none hidden md:block"
+        className="absolute right-[-2%] bottom-[-3%] pointer-events-none hidden md:block"
         style={{ y: slowY }}
-        initial={{ opacity: 0, x: -60, scale: 0.8 }}
-        animate={{ opacity: 0.85, x: 0, scale: 1 }}
+        initial={{ opacity: 0, x: 80, scale: 0.8 }}
+        animate={{ opacity: 0.88, x: 0, scale: 1 }}
         transition={{ duration: 1.4, ease: EASE }}
       >
         <div className="sketch-float-slow">
           <Image
-            src="/visualelements/umbrella1.png" alt=""
+            src="/visualelements/Martini.png" alt=""
             width={700} height={700}
-            className="w-[380px] h-[380px] lg:w-[460px] lg:h-[460px] object-contain"
-            style={{ mixBlendMode: 'multiply', transform: 'rotate(30deg) scaleX(-1)' }}
+            className="w-[420px] h-[420px] lg:w-[520px] lg:h-[520px] object-contain"
+            style={{ mixBlendMode: 'multiply' }}
           />
         </div>
       </motion.div>
