@@ -45,7 +45,7 @@ const panels = [
 export default function MultiDrugContent() {
   const d = useDict().multiDrug;
   const locale = useLocale();
-  const homeHref = locale === 'uk' ? '/uk' : '/';
+  const homeHref = (locale === 'uk' || locale === 'de') ? `/${locale}` : '/';
 
   return (
     <main className="flex-1 w-full px-6 md:px-16 lg:px-24 pt-32 pb-20 relative overflow-hidden">
@@ -372,7 +372,7 @@ export default function MultiDrugContent() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7, ease }}
           className="border-t border-border pt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <p className="font-body text-muted-foreground text-sm">{d.ctaText}</p>
-          <motion.a href={locale === 'uk' ? '/uk/#buy' : '/#buy'} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+          <motion.a href={(locale === 'uk' || locale === 'de') ? `/${locale}/#buy` : '/#buy'} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
             className="px-8 py-4 bg-foreground text-background font-heading text-xl tracking-wide hover:bg-foreground/90 transition-colors">
             {d.ctaBtn}
           </motion.a>

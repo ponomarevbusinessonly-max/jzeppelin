@@ -15,13 +15,14 @@ const PRODUCT_HREFS = [
   "/products/thc-parent-test",
 ];
 
-// Map locale → home root so language switching lands on the right page
-const LOCALE_HOME = { EN: '/', UK: '/uk', DE: '/', FR: '/' };
+// Locales that have a mirrored subtree under /<prefix>/. Keep in sync with
+// SUPPORTED_LOCALES in lib/i18n/dictionaries.js.
+const LOCALE_PREFIXES = ['uk', 'de'];
 
 const languages = [
   { code: "EN", label: "English",    route: "/" },
   { code: "UK", label: "Українська", route: "/uk" },
-  { code: "DE", label: "Deutsch",    route: "/" },
+  { code: "DE", label: "Deutsch",    route: "/de" },
   { code: "FR", label: "Français",   route: "/" },
 ];
 
@@ -29,8 +30,8 @@ export default function Navbar() {
   const dict = useDict();
   const locale = useLocale();
 
-  // Home prefix for anchor links (EN = '/', UK = '/uk')
-  const homeBase = locale === 'uk' ? '/uk' : '';
+  // Home prefix for anchor links (EN = '', UK = '/uk', DE = '/de')
+  const homeBase = LOCALE_PREFIXES.includes(locale) ? `/${locale}` : '';
   // Build nav links from dictionary — prefix product hrefs with current locale
   const PRODUCTS = [
     { label: dict.nav.productsItems.drinkCheck, href: `${homeBase}${PRODUCT_HREFS[0]}` },
@@ -50,7 +51,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   // Derive active lang from locale context (uppercase)
-  const activeLang = locale === 'uk' ? 'UK' : 'EN';
+  const activeLang = LOCALE_PREFIXES.includes(locale) ? locale.toUpperCase() : 'EN';
   const router = useRouter();
   const pathname = usePathname();
 
@@ -58,13 +59,17 @@ export default function Navbar() {
   // Uses hard navigation (window.location) so the LocaleProvider tree
   // is fully remounted — soft router.push keeps the old provider alive.
   const handleLangSwitch = (lang) => {
-    const isUkPath = pathname.startsWith('/uk');
+    const code = lang.code.toLowerCase();
+    // Strip any existing locale prefix from the current path
+    const prefixRegex = new RegExp(`^/(?:${LOCALE_PREFIXES.join('|')})(?=/|$)`);
+    const barePath = pathname.replace(prefixRegex, '') || '/';
+
     let target;
-    if (lang.code === 'UK') {
-      target = isUkPath ? pathname : `/uk${pathname}`;
+    if (LOCALE_PREFIXES.includes(code)) {
+      target = barePath === '/' ? `/${code}` : `/${code}${barePath}`;
     } else {
-      // EN (and unsupported locales) — strip /uk prefix, fall back to home
-      target = isUkPath ? (pathname.replace(/^\/uk/, '') || '/') : pathname;
+      // EN (and unsupported locales without a mirror) — use bare path
+      target = barePath;
     }
     setLangOpen(false);
     window.location.href = target;
@@ -140,10 +145,10 @@ export default function Navbar() {
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link
-          href={locale === 'uk' ? '/uk' : '/'}
+          href={homeBase || '/'}
           onClick={(e) => {
-            // On both home variants (/ and /uk): scroll to top + strip hash
-            if (pathname === '/' || pathname === '/uk') {
+            // On any home variant (/, /uk, /de): scroll to top + strip hash
+            if (pathname === '/' || LOCALE_PREFIXES.some((p) => pathname === `/${p}`)) {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
               window.history.replaceState(null, '', pathname);

@@ -9,7 +9,7 @@ export default function AIAnalysisContent() {
   const dict = useDict();
   const locale = useLocale();
   const a = dict.aiAnalysis;
-  const buyHref = locale === 'uk' ? '/uk/#buy' : '/#buy';
+  const buyHref = (locale === 'uk' || locale === 'de') ? `/${locale}/#buy` : '/#buy';
 
   return (
     <main className="flex-1 flex flex-col items-center justify-center px-6 md:px-16 lg:px-24 py-32 text-center">

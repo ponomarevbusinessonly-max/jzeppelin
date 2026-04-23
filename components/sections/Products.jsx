@@ -8,7 +8,7 @@ import { useDict, useLocale } from '@/lib/i18n/LocaleProvider';
 export default function Products() {
   const dict = useDict();
   const locale = useLocale();
-  const prefix = locale === 'uk' ? '/uk' : '';
+  const prefix = (locale === 'uk' || locale === 'de') ? `/${locale}` : '';
   const products = [
     {
       name: dict.products.items.drink.name,
